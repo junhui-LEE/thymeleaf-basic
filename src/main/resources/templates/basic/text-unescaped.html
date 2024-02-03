@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>text vs utext</h1>
+<ul>
+    <li>th:text = <span th:text="${data}"></span></li>
+    <!-- 들어오는 값에 html에서 해석할 수 있는 < 와 같은 특수문자가 들어올 시에 html의 해석은 무시(escape)하고 문자로서 인식을 해라! 즉 < 가 출력되게 해라 -->
+    <li>th:utext = <span th:utext="${data}"></span></li>
+    <!-- 들어오는 값에 html에서 해석할 수 있는 < 와 같은 특스문자가 들어올 시에 html의 해석을 무시하지 말고(unescape) 진행해라! 즉 < 을 html로 하여금 테그의 시작으로 해석해라! -->
+</ul>
+
+<h1><span th:inline="none"> [[...]] vs [(...)] </span></h1>
+<ul>
+    <li><span th:inline="none">[[...]] = </span>[[${data}]]</li>
+    <!-- [[...]] : escape, 들어오는 값에 html이 해석할 수 있는 특수문자가 들어와도 문자로서 인식해라! -->
+    <li><span th:inline="none">[(...)] = </span>[(${data})]</li>
+    <!-- [(...)] : unescape, 들어오는 값에 html이 해석할 수 있는 특수문자가 들어오면 피하지 말고 html로 하여금 해석하게끔 해라! -->
+    <!-- th:inline="none"가 의미하는 바는 해당 속성이 있는 테그에서는 타임리프의 기능을 적용하지 말라는 의미이다. -->
+</ul>
+
+</body>
+</html>
