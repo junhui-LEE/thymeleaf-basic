@@ -1,0 +1,82 @@
+<!--
+    변수 - SpringEL
+    타임리프에서 모델에 담은 것을 꺼내거나, 타임리프 내부에 선언된 어떤 변수들을 사용하는 것 처럼 변수를 사용할 때는
+    변수표현식을 사용한다. 변수표현식은 ${...} 이렇게 생겼다. 이 변수 표현식안에 SrpingEL이라는 스프링이 제공하는
+    표현식을 사용할 수 있다.
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+    지금 하려고 하는 것은 타임리프에서 변수표현식 ${...}를 통해서 타임리프 내부에 있는 변수나
+    서버의 모델로 부터 받은 변수를 사용하고 싶은데 ... 안의 표현식을 통해서 ...안의 값을 제어
+    할 수 있다. 그때 ...안에 들어가는 표현식을 SpringEL표현식이라고 하고 타임리프틑 변수표현식
+    안의 SpringEL표현식을 통해서 변수의 제어된 값을 가져올 수 있다. 그럼 ${...}의 ...에
+    해당하는 변수를 표현하는 표현식, SpringEL에 대해서 알아보자!
+
+    스프링이 내부에서 객체에 접근하는 그런 문법이 있는데 타임리프(SpringEL, 변수 제어 표현식 ㅋㅋ)
+    에서 그 스프링의 객체 접근 문법을 그대로 가져다가 쓴다. 그래서 여러가지 방법으로 object(변수)
+    에 접근해서 데이터를 조회 할 수 있다. 그리고 다시한번 써 보자면 그 여러가지 접근 방식,
+    변수에 접근하는 여려 방식(표현식)을 SpringEL이라고 한다. 그리고 타임리프는 변수가
+    list와 map이어도 조회하는 방법도 지원한다. (참고로 EL의 뜻은 Expression Language 이다.)
+
+    그럼 변수표현식(${...})안의 ...에 들어가는 표현식(EL) 타임리프는 스프링의 변수 접근 방법
+    을 따르기 때문에 SpringEL, 음.. 다시말해 타임리프에서 제공하는 변수에 접근하기 위한 표현식
+    ,${...}가 변수 표현식이니까 ...은 변수 제어 표현식? ㅋㅋ, 아무튼 변수 제어 표현식에 대해서
+    알아보자!
+-->
+    <h1>SpringEL 표현식</h1>
+<!--    SpringEL 다양한 표현식 사용-->
+<ul>Object
+    <li>${user.username} = <span th:text="${user.username}"></span></li>
+    <li>${user['username']} = <span th:text="${user['username']}"></span></li>
+    <li>${user.getUsername()} = <span th:text="${user.getUsername()}"></span></li>
+</ul>
+<!--
+    Object는 아래와 같은 방법으로 접근해서 가져올 수 있다.
+    user.username : user의 username을 프로퍼티 접근 -> user.getUsername()
+    user['username'] : 위와 같음 -> user.getUsername()
+    user.getUsername() : user의 getUsername()을 직접 호출
+-->
+<ul>List
+    <li>${users[0].username} = <span th:text="${users[0].username}"></span></li>
+    <li>${users[0]['username']} = <span th:text="${users[0]['username']}"></span></li>
+    <li>${users[0].getUsername()} = <span th:text="${users[0].getUsername()}"></span></li>
+</ul>
+<!--
+    List
+    users[0].username : List에서 첫 번째 회원을 찾고 username 프로퍼티 접근 -> list.get(0).getUsername()
+    users[0]['username'] : 위와 같음
+    users[0].getUsername() : List에서 첫 번째 회원을 찾고 메서드 직접 호출
+-->
+<ul>
+    <li>${userMap['userA'].username} = <span th:text="${userMap['userA'].username}"></span></li>
+    <li>${userMap['userA']['username']} = <span th:text="${userMap['userA']['username']}"></span></li>
+<!--    <li>이것도 가능 ㅋㅋ ${userMap.userA.username} = <span th:text="${userMap.userA.username}"></span></li>-->
+    <li>${userMap['userA'].getUsername()} = <span th:text="${userMap['userA'].getUsername()}"></span></li>
+<!--    <li>userMap에 있는 userB도 한번 보자! ${userMap['userB']['age']} = <span th:text="${userMap['userB']['age']}"></span></li>-->
+</ul>
+<!--
+    Map
+    userMap['userA'].username : Map에서 userA를 찾고, username 프로퍼티 접근 -> map.get("userA").getUsername()
+    userMap['userA']['username'] : 위와 같음
+    userMap['userA'].getUsername() : Map에서 userA를 찾고 메서드 직접 호출
+-->
+<h1>지역변수 - (th:with)</h1>
+<div th:with="first=${users[0]}">
+    <p>처음 사람의 이름은 <span th:text="${first.username}"></span></p>
+    <!--             text="${...}" ${}안에 변수(first)를 써 줘야 한다.      -->
+</div>
+<!--
+    타임리프 안에서 지역변수를 선엄할 수 있다.
+    th:with를 사용하면 지역변수를 선언해서 사용할 수 있다. 지역변수는 선언한 테그 안에서만
+    사용할 수 있다. 위의 코드를 분석하자면 <div>테그 안에서 userA가 first라는 변수에 들어가고
+    그럼 그 다음부터는 first가 userA객체가 된다. 그러한 first변수를 <span>안에서 변수표현식을
+    통해서 쓰면 된다. 다시 말하지만 지역변수는 선언한 테그 안에서만 사용할 수 있다.
+-->
+</body>
+</html>
