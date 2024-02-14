@@ -20,6 +20,11 @@ import java.util.Map;
 @RequestMapping("/basic")
 public class BasicController {
 
+    @GetMapping("/attribute")
+    public String attribute(){
+        return "basic/attribute";
+    }
+
     @GetMapping("/operation")
     public String operation(Model model){
         model.addAttribute("nullData", null);
