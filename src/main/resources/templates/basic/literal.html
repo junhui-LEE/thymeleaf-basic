@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thyemleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>리터럴</h1>
+<ul>
+    <!-- 주의! 다음 주석을 풀명 예외가 발생함 -->
+<!--    <li>"hello world!" = <span th:text="hello world!"></span></li>-->
+    <li>'hello' + ' world!' = <span th:text="'hello' + ' world!'"></span></li>
+    <li>hello + ' world!' = <span th:text="hello + ' world!'"></span></li>
+<!--    문자 리터럴을 더하기 해서 쓸 수도 있다.-->
+    <li>'hello world!' = <span th:text="'hello world!'"></span></li>
+    <li>'hello' + ${data} = <span th:text="'hello ' + ${data}"></span></li>
+<!--    리터럴이랑 변수랑 더하는 것도 당연히 된다.-->
+    <li>리터럴 대체 |hello ${data}| = <span th:text="|hello ${data}|"></span></li>
+<!--    |...| 안의 부분을 통으로 문자로 놓고 ${data}부분만 싹 치환해 준다.-->
+<!--    원래대로라면 "'hello' + ${data}"처럼 더해야 한다.-->
+</ul>
+</body>
+</html>

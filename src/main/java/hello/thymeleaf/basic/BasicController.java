@@ -1,6 +1,5 @@
 package hello.thymeleaf.basic;
 
-
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,6 +19,12 @@ import java.util.Map;
 @Controller
 @RequestMapping("/basic")
 public class BasicController {
+
+    @GetMapping("/literal")
+    public String literal(Model model){
+        model.addAttribute("data", "Spring!");
+        return "basic/literal";
+    }
 
     @GetMapping("/link")
     public String link(Model model){
