@@ -20,6 +20,12 @@ import java.util.Map;
 @RequestMapping("/basic")
 public class BasicController {
 
+    @GetMapping("/comments")
+    public String comments(Model model){
+        model.addAttribute("data", "Spring!");
+        return "basic/comments";
+    }
+
     @GetMapping("/condition")
     public String condition(Model model){
         addUsers(model);
