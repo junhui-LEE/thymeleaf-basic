@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<th:block th:each="user : ${users}">
+    <!--
+        <div>2개를 , 2개씩 돌아가면서 출력하고 싶을때 <th:block> 을 쓴다.
+        <div>1개를 하나씩 루프를 돌리고 싶으면 <div th:each="user : ${users}"></div> 이렇게 하면 된다.
+        물론 아래의 주석과 같이 each문을 써서 돌려도 된다.
+    -->
+    <div>
+        사용자 이름1 <span th:text="${user.username}"></span>
+        사용자 나이1 <span th:text="${user.age}"></span>
+    </div>
+    <div>
+        요약 : <span th:text="${user.username} + ' / ' + ${user.age}"></span>
+    </div>
+</th:block>
+<br/>
+<!--
+    <div th:each="user : ${users}">
+        <div>
+            사용자 이름1 : <span th:text="${user.username}"></span>
+            사용자 나이1 : <span th:text="${user.age}"></span>
+        </div>
+        <div>
+            요약 : <span th:text="${user.username} + ' / ' + ${user.age}"></span>
+        </div>
+    </div>
+-->
+
+</body>
+</html>
