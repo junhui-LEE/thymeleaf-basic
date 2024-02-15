@@ -20,6 +20,12 @@ import java.util.Map;
 @RequestMapping("/basic")
 public class BasicController {
 
+    @GetMapping("/condition")
+    public String condition(Model model){
+        addUsers(model);
+        return "basic/condition";
+    }
+
     @GetMapping("/each")
     public String each(Model model){
         addUsers(model);
