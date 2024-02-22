@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- javascript 인라인 사용전 -->
+<!--
+<script>
+    var username = [[${user.username}]];
+    var age = [[${user.age}]];
+    /*
+    이렇게 하면 타임리프에서 그대로 랜더링 해준다.
+    - js라서 var username = <span th:text="${user.username}"></span> 이런식으로 쓸 수 없고 어떻게 th:text를
+     username 에 적용할 수 없다. 따라서 타임리프로 부터 넘어온 파라미터의 이름이 user인 객체를 var username 에 넣기
+     위해서는 바로 값을 출력하는 [[${user.username}]]문법을 쓰면 된다.
+    - js니까 서버에서 동작하는게 아니다. HTML웹브라우저가 js를 실행할 때, userA값이 var username에 담긴다. 서버에서는
+     이전에 렌더링을 끝낸다. 그 후 웹브라우저에 와서 var username에 값이 담기게 된다.
+    */
+
+    // 자바스크립트 내추럴 템플릿
+    /*
+    js도 타임리프를 쓰면 내추럴 템플릿 기능이 지원된다.
+    */
+    var username2 = /*[[${user.username}]]*/ "test username";
+   //  /*[[${user.username}]]*/은 주석이니까 서버를 거치지 않고 절대경로로 파일을 브라우저로 바로 열면 var username2에
+   //  "test username"가 들어간다. 서버를 통해서 타임리프가 user.username이라는 변수를 넘겨서 렌더링 한 다음에 브라우저가
+   //  var username2에 변수를 넣을 때에는 타임리프로 부터 받은 user.username이 var username2에 들어간다.
+
+    // 객체
+    var user = [[${user}]];
+    /* 이렇게 하면 당연히 user객체의 toString가 호출된다. */
+
+        /*
+    자바스크립트 인라인 사용전 - 결과(페이지 소스보기로 보거나 개발자 도구에서 콘솔로 확인해 본 결과)
+    userA로 잘 치환이 되지만 문제가 있는데 f12해서 개발자 도구에서 username을 콘솔에 찍어보면
+    UserA is not defined 요류가 발생한다. js문법이 안맞아서(깨져서)그런 것이다. js문법상
+    var username = [[${user.username}]]; 이렇게 하면 안되고 var username = "[[${user.username}]]";
+    이렇게 해야 한다. 생각보다 js에 타임리프의 값을 전달하는게 쉽지가 않다. 타임리프는 본인이
+    그냥 렌더링 하게 되면 이렇게 문제가 되는 것이다. 문자의 경우 var username = "[[${user.username}]]";
+    과 같이 ""을 넣고 숫자의 경우 var age = [[${user.age}]]; 이렇게 해야 하고 이런것들을 전부 다 챙겨줘야 한다.
+        */
+</script>
+-->
+
+<!-- javascript 인라인 사용후 -->
+<script th:inline="javascript">
+    /* 여기는 js영역이고 타임리프가 js에서 잘 쓸 수 있게 도와준다. */
+
+    /*
+    js에서 타임리프 기능이 잘 적용될 수 있게 도와준다. 타임리프가 지원하는 기능이라고 하면 문자의 경우 ""을 넣어주고
+    숫자의 경우 ""을 안넣어주고 하는 기능이랑 정적파일열때와 컨트롤러 거쳐서 열때 둘다 화면이 깨지지 않고 보여주도록
+    하는 내추럴 템플릿 기능이다.
+    */
+
+    var username = [[${user.username}]];
+    var age = [[${user.age}]];
+
+    // 자바스크립트 내추럴 템플릿
+    var username2 = /*[[${user.username}]]*/ "test username";
+
+    // 객체
+    var user = [[${user}]];
+    /* 자바스크립트 인라인을 사용하면 java객체가 json으로 바뀌어서 var user에 들어가게 된다.
+
+    자바스크립트 인라인을 사용하기 전에는 타임리프로 부터 받은 변수(자바의 user 객체)자체가 들어오기 때문에 user객체의 toString이 출력되지만
+    자바스크립트 인라인을 사용하면 변수표현식에 들어온 표현식이 자바 객체이면 json으로 바뀌어서 들어온다. 그리고 들어온 값을 var user = [[${user}]]; 처럼 user 변수에 담을 수 있다.
+    */
+
+    /* 자바스크립트 인라인 each (자바스크립트 안에서 루프를 돌리고 싶을때 사용한다.) */
+    [# th:each="user, stat : ${users}"]
+    var user[[${stat.count}]] = [[${user}]];
+    [/]
+
+</script>
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 package hello.thymeleaf.basic;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
@@ -15,10 +16,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Slf4j
 @Controller
 @RequestMapping("/basic")
 public class BasicController {
+
+    @GetMapping("/javascript")
+    public String javascript(Model model){
+        model.addAttribute("user", new User("user\"A\"", 10));
+        addUsers(model);
+
+        return "basic/javascript";
+    }
 
     @GetMapping("/block")
     public String block(Model model){
