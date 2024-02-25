@@ -1,0 +1,22 @@
+<!-- 여기서 base.html을 가져다 쓰는 것이다. -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template/layout/base :: common_header(~{::title}, ~{::link})">
+    <title>메인타이틀</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="sytlesheet" th:href="@{/themes/smoothness/jquery-ui.css}">
+    <!--
+    먼저 th:replace로 헤드 부분을 내 사이트에서는 내 헤드를 안쓴다. th:replace로 완전히
+    바꿔치기 하는 것이다. 그런데 그냥 바꿔치기 하는 것이 아니다. base.html로 공통 레이아웃이
+    있어도 각각의 페이지마다 조금조금씩 다르게 하고 싶은게 있다. 예를들어서 지금 여기서는
+    타이틀을 다르게 하고 싶은것이다. 그리고 추가로 링크 관련된 이런 css같은 정보들을 각각의
+    페이지마다 조금 다르게 넣고 싶은 것이다.
+
+    그러니까 원래 레이아웃 틀이 있고 거기에 내가 원하는 걸 집어 넣어서 그 레이아웃을 완성하는 것이다.
+    ~{::title} 문법을 쓰면 된다. 이렇게 하면 <title>테그자체를 ::title에 넣어버린다.
+    -->
+</head>
+<body>
+    메인컨텐츠
+</body>
+</html>

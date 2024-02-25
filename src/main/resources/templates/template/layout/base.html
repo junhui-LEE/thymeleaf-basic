@@ -1,0 +1,62 @@
+<!--
+이전 시간에 배운 "템플릿 조각"에 대한 내용은 A라는 페이지(html)에서
+테그 안에 th:fragment="copyParam (param1, param2)"이렇게
+fragment를 지정하고 B라는 페이지(html)에서 A페이지에 정의된 copyParam테그를
+호출 함으로서 A페이지(html)에 정의된 fragment테그 전체를 가져오는 내용이었다.
+이때 A페이지의 fragment테그에 파라미터를 넣어서 호출 하는 것도 가능했다.
+
+이번시간에 배울 "템플릿 레이아웃1"이라는 강의는 사이트(서비스 되는 html의 묶음? ㅋㅋ)에서
+공통으로 적용이 되는 레이아웃을 만들고 그 레이아웃을 호출하는데(공통 레이아웃은 base.html
+로 하고 호출하는 페이지는 layoutMain.html로 한다.) 그래서 호출하는 페이지(layoutMain.html)
+에서는 공통 레이아웃인 base.html을 가져다 쓸 수 있는데 이때, 호출하는 페이지(layoutMain.html)
+에서 단순하게 호출시에 파라미터를 넘기는 것이 아니라 호출하는 페이지(layoutMain.html)에서 필요로
+하는 테그들도 넘길 수 있도록 하는 것을 배울 것이다.
+
+책에 있는 내용을 한번 써보자.
+
+"템플릿 레이아웃1"
+템플릿 레이아웃
+
+이전에는 일부 코드 조각을 가지고 와서 사용했다면, 이번에는 개념을 더 확장해서 코드 조각을 레이아웃에
+넘겨서 사용하는 방법에 대해서 알아보자
+
+예를 들어서 <head>에 공통으로 사용하는 css, javascript같은 정보들이 있는데, 이러한 공통
+정보들을 한 곳에 모아두고 공통으로 사용하지만, 각 페이지 마다 필요한 정보를 더 추가해서 사용하고
+싶다면 다음과 같이 사용하면 된다.
+
+<head>에 정해진 틀이 있고 거기에 내 페이지에서 정보를 단순하게 이전 강의에서 처럼 문자 파라미터를
+넘기는 개념이 아니라, HTML테가 자체를 막 넘기고 그러고 싶은 것이다. 이전 강의에서는 모양을 가지고 있고
+그 모양을 가져다 쓰고 그랬는데 이번에는 그 반대이다. 큰 모양이(전부 공통으로 쓰는 테그,
+css, js등 불러오는 테그) 저기에 있고 내 코드를 그 모양에 맞춰서 넣는것이다. , 그 모양에 추가하는 것이다.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 뭔가 우리 사이트에 헤드와 관련된 공통 레이아웃이 있는 것이다. 그 레이아웃 파일이 base.html이다. -->
+
+<!-- 사이트 전체에서 <head>를 공통으로 사용한다고 가정한다.-> css, image, js등등 여러 리소스들을 가져다 쓴다고 가정한다. -->
+<head th:fragment="common_header(title,links)">
+    <title th:replace="${title}">레이아웃 타이틀</title>
+
+    <!-- 공통 -->
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/awesomeapp.css}">
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
+    <script type="text/javascript" th:src="@{/sh/scripts/codebase.js}"></script>
+
+    <!-- 추가 -->
+    <th:block th:replace="${links}"/> <!-- 넘어온 링크테그 2개가 나오게 된다. -->
+</head>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
