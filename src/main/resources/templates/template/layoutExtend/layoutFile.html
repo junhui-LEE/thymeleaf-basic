@@ -1,0 +1,20 @@
+<!--
+앞서 이야기한 개념(템플릿 레이아웃)을 <head>정도에만 적용하는게 아니라 <html>전체에 적용할 수도 있다.
+html 전체를 레이아웃으로 만들고 거기에 우리의 코드 조각을 살짝 넣는 방식으로 진행을 더 확장해 보겠다.
+-->
+<!-- layoutFile.html이 공통 레이아웃을 담당하는 템플릿 레이아웃이다. -->
+<!DOCTYPE html>
+<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:replace="${title}">레이아웃 타이틀</title>
+</head>
+<body>
+    <h1>레이아웃 H1</h1>
+    <div th:replace="${content}">
+        <p>레이아웃 컨텐츠</p>
+    </div>
+    <footer>
+        레이아웃 푸터
+    </footer>
+</body>
+</html>

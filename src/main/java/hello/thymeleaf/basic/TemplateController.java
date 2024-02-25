@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/template")
 public class TemplateController {
+    @GetMapping("/layoutExtend")
+    public String layoutExtend(){
+        return "template/layoutExtend/layoutExtendMain";
+    }
+
     @GetMapping("/layout")
     public String layout(){
         return "template/layout/layoutMain";
